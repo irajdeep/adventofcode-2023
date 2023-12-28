@@ -1,6 +1,3 @@
-import heapq
-import time
-
 zrows, zcols = set(), set()
 
 def all_row(r: int, lines) -> bool:
@@ -15,36 +12,6 @@ def all_col(c: int, lines) -> bool:
             return False
     return True
 
-def dijk(src, dest, lines) -> int:
-    pq, dist = [], {}
-    dist[tuple(src)] = 0
-
-    R, C = len(lines), len(lines[0])
-    # src[0] = row, src[1] = col
-    heapq.heappush(pq, [0, src[0], src[1]])
-
-    while pq:
-
-        c_dis, ur, uc = heapq.heappop(pq)
-        print(c_dis, ur, uc)
-        # time.sleep(1)
-
-        if [ur, uc] == dest:
-            return c_dis
-
-        for dr, dc in [[1 , 0 ], [0, 1],[-1, 0], [0, -1]]:
-            nr, nc = ur + dr, uc + dc
-            if nr >= 0 and nr < R and nc >= 0 and nc < C:
-                wt = 1
-                if nr in zrows or nc in zcols:
-                    wt = 2
-
-                n_dis = c_dis + wt
-                if tuple([nr, nc]) not in dist or dist[tuple([nr, nc])] > n_dis:
-                    dist[tuple([nr, nc])] = n_dis
-                    heapq.heappush(pq, [n_dis, nr, nc])
-
-    return dist[tuple(dest)]
 
 def solve1(path: str) -> int:
     with open(path) as file:
